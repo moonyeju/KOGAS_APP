@@ -6,27 +6,26 @@ const ListItem = memo(({name, item}) => {
   const navigation = useNavigation();
   return (
     <Pressable
-      onPress={() => {
-        navigation.navigate('ListDetail', {
-          title: item.title,
-          registrationDate: item.registrationDate,
-          content: item.content,
-        });
-      }}
-      hitSlop={10}>
-      (
+    // onPress={() => {
+    //   navigation.navigate('ListDetail', {
+    //     title: item.title,
+    //     registrationDate: item.registrationDate,
+    //     content: item.content,
+    //   });
+    // }}
+    // hitSlop={10}
+    >
       <View style={styles.container}>
-        <View style={styles.task1}>
-          <Text style={styles.task1txt}>{item.status}</Text>
-          <Text style={styles.task1txt}>{item.title}</Text>
-          <Text style={styles.task1txt}>{item.writer}</Text>
+        <View>
+          <Text>{item.status}</Text>
+          <Text>제목: {item.title}</Text>
+          <Text>작성자: {item.writer}</Text>
         </View>
 
-        <View style={styles.task2}>
-          <Text>{item.registrationDate}</Text>
+        <View>
+          <Text>등록일자: {item.registrationDate}</Text>
         </View>
       </View>
-      )
     </Pressable>
   );
 });
@@ -40,20 +39,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 5,
     paddingHorizontal: 15,
-  },
-  task1: {
-    marginVertical: 15,
-  },
-  task1txt: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  task2: {
-    alignItems: 'flex-end',
-    marginVertical: 3,
-  },
-  centerlist: {
-    marginVertical: 10,
   },
 });
 

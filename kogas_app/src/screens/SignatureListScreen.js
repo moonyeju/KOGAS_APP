@@ -2,16 +2,11 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import ListItem from '../components/ListItem';
 import EmptyList from '../components/EmptyList';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-const SignaturesScreen = () => {
+const SignatureListScreen = () => {
   const List = [
     {
       id: 1,
-      status: '서명 진행중', //상태
+      status: '서명진행중', //상태
       title: '제목',
       writer: '작성자',
       registrationDate: '2023-09-25', //등록 날짜
@@ -32,7 +27,7 @@ const SignaturesScreen = () => {
       <FlatList
         data={List}
         renderItem={({item}) => (
-          <ListItem name="SignaturesScreen" item={item} />
+          <ListItem name="SignatureListScreen" item={item} />
         )}
         windowSize={5}
         ListHeaderComponent={View}
@@ -44,4 +39,10 @@ const SignaturesScreen = () => {
   );
 };
 
-export default SignaturesScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
+
+export default SignatureListScreen;
