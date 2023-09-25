@@ -4,6 +4,7 @@ import {PRIMARY, WHITE} from '../color';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SignatureListScreen from '../screens/SignatureListScreen.js';
 import SettingsScreen from '../screens/SettingsScreen.js';
+import SignatureScreen from '../screens/SignatureScreen.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,8 +24,8 @@ const BottomStack = () => {
         }}
       />
       <Tab.Screen
-        name="SignatureList"
-        component={SignatureListScreen}
+        name="Signature"
+        component={SignatureScreen}
         options={{
           tabBarLabel: '서명 문서',
           title: '서명 문서',
