@@ -10,7 +10,17 @@ const SignatureListScreen = () => {
       title: '제목',
       writer: '작성자',
       registrationDate: '2023-09-25', //등록 날짜
-      content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      content: [{
+        department: '계약운용부',
+        name: 'aaa',
+        status: '서명완료',
+        date: '2023/09/25 15:00'
+      }, {
+        department: '발전영업부',
+        name: 'bbb',
+        status: '서명완료',
+        date: '2023/09/25 15:00'
+        }]
     },
     {
       id: 2,
@@ -18,10 +28,9 @@ const SignatureListScreen = () => {
       title: '제목',
       writer: '작성자',
       registrationDate: '2023-09-25', //등록 날짜
-      content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      content: [{department: '발전영업부', name: 'bbb', status: '서명완료', date: '2023/09/25 15:00'}]
     },
   ];
-
   return List.length ? (
     <View style={styles.container}>
       <FlatList

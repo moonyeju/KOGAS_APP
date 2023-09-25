@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Button from '../components/Button';
 import TextInput, {IconNames, ReturnKeyTypes} from '../components/TextInput';
-import {PRIMARY} from '../color';
+import {GRAY, PRIMARY} from '../color';
 import PropTypes from 'prop-types';
 
 const SignInScreen = ({navigation}) => {
@@ -55,7 +55,7 @@ const SignInScreen = ({navigation}) => {
   return (
     <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
       <View style={styles.container}>
-        <Text style={styles.text}>APP</Text>
+        <Text style={styles.text}>스마트 전자서명 시스템</Text>
         <View style={styles.view}>
           <TextInput
             value={email}
@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 25,
     padding: 30,
-    color: PRIMARY.DARK,
     fontWeight: 'bold',
   },
 

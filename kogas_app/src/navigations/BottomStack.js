@@ -10,41 +10,31 @@ const Tab = createBottomTabNavigator();
 const BottomStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        tabBarActiveTintColor: PRIMARY.DEFAULT,
-        headerTitleAlign: 'center',
-        headerTintColor: PRIMARY.DEFAULT,
-        headerTitleStyle: {fontWeight: '700'},
-      }}>
+      initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          title: '홈',
-          tabBarLabel: '홈',
+          title: 'KOGAS',
+          tabBarLabel: 'KOGAS',
           tabBarIcon: ({color, size}) => (
             <Icon name="home-outline" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name="서명 문서"
+        name="SignatureList"
         component={SignatureListScreen}
         options={{
           tabBarLabel: '서명 문서',
           title: '서명 문서',
-          headerStyle: {
-            backgroundColor: PRIMARY.DEFAULT,
-          },
-          headerTintColor: WHITE,
           tabBarIcon: ({color, size}) => (
             <Icon name="document-text-outline" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name="환경설정"
+        name="Settings"
         component={SettingsScreen}
         options={{
           tabBarLabel: '환경설정',
