@@ -13,7 +13,7 @@ const Navigation = () => {
       <RootStack.Navigator
         initialRouteName="Main"
         >
-        <RootStack.Screen name="Login" component={SignInScreen} />
+        <RootStack.Screen name="Login" component={SignInScreen} options={{ headerShown: false }} />
         <RootStack.Screen name="Main" component={MainStack} options={{
         title: 'KOGAS',
         tabBarActiveTintColor: PRIMARY.DEFAULT,
