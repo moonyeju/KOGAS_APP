@@ -15,15 +15,15 @@ import {GRAY, PRIMARY} from '../color';
 import PropTypes from 'prop-types';
 
 const SignInScreen = ({navigation}) => {
-  const [email, setEmail] = useState('');
+  const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const passwordRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setDisabled(!email || !password);
-  }, [email, password]);
+    setDisabled(!id || !password);
+  }, [id, password]);
 
   const handleDismissKeyboard = () => {
     Keyboard.dismiss();
@@ -58,8 +58,8 @@ const SignInScreen = ({navigation}) => {
         <Text style={styles.text}>스마트 전자서명 시스템</Text>
         <View style={styles.view}>
           <TextInput
-            value={email}
-            onChangeText={text => setEmail(text.trim())}
+            value={id}
+            onChangeText={text => setId(text.trim())}
             title={'아이디'}
             returnKeyType={ReturnKeyTypes.NEXT}
             iconName={IconNames.EMAIL}

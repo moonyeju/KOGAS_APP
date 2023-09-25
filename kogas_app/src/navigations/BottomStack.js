@@ -18,8 +18,8 @@ const BottomStack = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'KOGAS',
-          tabBarLabel: 'KOGAS',
+          title: '홈',
+          tabBarLabel: '홈',
           tabBarIcon: ({color, size}) => (
             <Icon name="home-outline" color={color} size={size} />
           ),
