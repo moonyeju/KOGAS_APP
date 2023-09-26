@@ -2,6 +2,7 @@ import { StyleSheet, Switch, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { GRAY, PRIMARY, WHITE } from '../color';
 import { useState } from 'react';
+import Button from '../components/Button';
 
 const SettingsScreen = () => {
   const [alarm, setAlarm] = useState(false);
@@ -27,10 +28,10 @@ const SettingsScreen = () => {
         </View>
         {alarm && ( // 알림 설정이 켜져 있을 때만 하단 텍스트를 표시
           <View>
-            <Text>하단 텍스트</Text>
+            <Text>시간대별알림설정 여부</Text>
           </View>
         )}
-        <View style={styles.textContainer}>
+        {/* <View style={styles.textContainer}>
           <Text style={styles.text}>다크 모드</Text>
           <View style={styles.switchStyle}>
             <Switch
@@ -41,7 +42,17 @@ const SettingsScreen = () => {
               value={dark}
             />
           </View>
-        </View>
+        </View> */}
+        <View style={styles.view}>
+          <Button
+              title={'기기등록'}
+          />
+          </View>
+        <View style={styles.view}>
+          <Button
+              title={'로그아웃'}
+          />
+          </View>
       </View>
     </View>
   );
@@ -77,5 +88,9 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
   },
+  view: {
+    margin: 15,
+    
+  }
 });
 export default SettingsScreen;

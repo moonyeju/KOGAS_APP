@@ -17,7 +17,7 @@ const ListDetailScreen = ({ route, navigation }) => {
         <Text style={styles.date}>기안자: {department} {name}</Text>
         <Text style={styles.date}>기안일자: {registrationDate}</Text>
       </View>
-      <Button title={'문서다운'}/> 
+      <Button title={'문서보기'}/> 
       <View>
         <Text style={styles.v}>서명 정보</Text>
         <FlatList

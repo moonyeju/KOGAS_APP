@@ -20,7 +20,9 @@ const MainStack = () => {
           <Stack.Screen
         name="BottomHome"
         component={BottomStack}
-        
+        options={{
+          headerLeft: null, // 뒤로 가기 버튼 숨김
+        }}
       />
       <Stack.Screen name="ListDetail"
         component={ListDetailScreen}/>

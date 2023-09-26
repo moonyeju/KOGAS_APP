@@ -10,7 +10,7 @@ export const ReturnKeyTypes = {
 };
 
 export const IconNames = {
-  EMAIL: 'mail-outline',
+  ID: 'lock-closed-outline',
   PASSWORD: 'lock-closed-outline',
 };
 
