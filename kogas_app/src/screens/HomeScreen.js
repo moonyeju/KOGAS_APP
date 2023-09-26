@@ -57,18 +57,20 @@ const HomeScreen = () => {
   const newperc = Math.floor((newcount / newdocs.content.length) * 100); // newcount 사용
 
   useEffect(() => {
+    setMyCount(0); // 초기화
+    setNewCount(0); // 초기화
     mydocs.content.forEach((item) => {
       if (item.status === '서명완료') {
         setMyCount((prevCount) => prevCount + 1); // 상태 업데이트
       }
     });
-//중복되서 커짐 해결필요
+
     newdocs.content.forEach((item) => {
       if (item.status === '서명완료') {
         setNewCount((prevCount) => prevCount + 1); // 상태 업데이트
       }
     });
-  }, []);
+  }, [mydocs, newdocs]);
   
   const List = [
     {
@@ -107,7 +109,14 @@ const HomeScreen = () => {
       <Text>내 진행 상황</Text>
       <Pressable
             onPress={() => {
-              navigation.navigate('Signature');
+              navigation.navigate('ListDetail',{
+            status: mydocs.status,
+            title: mydocs.title,
+            department: mydocs.department,
+            name: mydocs.name,
+            registrationDate: mydocs.registrationDate,
+            content: mydocs.content,
+          });
             }}
         hitSlop={10}
         style={styles.mydocs}
@@ -119,7 +128,14 @@ const HomeScreen = () => {
       </Pressable>
       <Pressable
             onPress={() => {
-              navigation.navigate('ListDetail');
+              navigation.navigate('ListDetail',{
+            status: newdocs.status,
+            title: newdocs.title,
+            department: newdocs.department,
+            name: newdocs.name,
+            registrationDate: newdocs.registrationDate,
+            content: newdocs.content,
+          });
             }}
         hitSlop={10}
         style={styles.mydocs}
