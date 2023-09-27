@@ -11,7 +11,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Main"
         screenOptions={{ headerShown: false }}>
         <RootStack.Screen name="Login" component={SignInScreen}/>
         <RootStack.Screen name="Main" component={MainStack} />

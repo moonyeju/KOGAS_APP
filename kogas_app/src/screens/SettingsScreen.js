@@ -4,7 +4,7 @@ import { GRAY, PRIMARY, WHITE } from '../color';
 import { useState } from 'react';
 import Button from '../components/Button';
 
-const SettingsScreen = () => {
+const SettingsScreen = ({navigation}) => {
   const [alarm, setAlarm] = useState(false);
   const [dark, setDark] = useState(false);
 
@@ -50,7 +50,10 @@ const SettingsScreen = () => {
           </View>
         <View style={styles.view}>
           <Button
-              title={'로그아웃'}
+            title={'로그아웃'}
+            onPress={() => {
+          navigation.navigate('Login');
+    }}
           />
           </View>
       </View>

@@ -1,6 +1,7 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {memo} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import { BLACK } from '../color';
 
 const ListItem = memo(({name, item}) => {
   const navigation = useNavigation();
@@ -39,10 +40,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     marginHorizontal: 10,
-    marginVertical:5,
-    borderBottomWidth: 0.5,
-    paddingVertical: 5,
+    marginVertical:10,
+    paddingVertical: 10,
     paddingHorizontal: 15,
+    borderRadius: 20,
+    borderColor: BLACK,
+    borderWidth: 1,
+    
   },
 });
 

@@ -8,8 +8,9 @@ const ListDetailScreen = ({ route, navigation }) => {
   const { name } = route.params;
   const {department} = route.params;
   const {registrationDate} = route.params;
-  const {content} = route.params;
+  const { content } = route.params;
   return (
+    
     <View style={styles.container}>
       <View>
       <Text style={styles.title}>{status}</Text>

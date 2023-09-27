@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { BLACK, GRAY } from '../color';
+import { BLACK, GRAY, WHITE } from '../color';
 import {useNavigation} from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
 import ListItem from '../components/ListItem';
@@ -104,9 +104,9 @@ const HomeScreen = () => {
   ];
 
   return (
-    <View>
-    <View>
-      <Text>내 진행 상황</Text>
+    <View style={styles.container}>
+    <View style={styles.containerTop}>
+      <Text style={styles.title}>내 진행 상황</Text>
       <Pressable
             onPress={() => {
               navigation.navigate('ListDetail',{
@@ -146,17 +146,16 @@ const HomeScreen = () => {
         </View>
       </Pressable>
     </View>
-    <View>
-        <Text style={styles.v}>서명 이력</Text>
+    <View style={styles.containerBottom}>
+        <Text style={styles.title}>서명 이력</Text>
         <View>
         <FlatList
         data={List}
         renderItem={({item}) => (
-          <ListItem name="SignatureListScreen" item={item} />
+          <ListItem name="HomeScreen" item={item} />
         )}
         // windowSize={5}
         ListHeaderComponent={View}
-        // ListHeaderComponentStyle={{height: 10}}
       />
         </View>
     </View>
@@ -164,13 +163,28 @@ const HomeScreen = () => {
   );
 };
 const styles = StyleSheet.create({
-  mydocs: {
-    backgroundColor: GRAY,
-    marginTop:10,
+  container: {
+    backgroundColor: WHITE,
+    flex:1,
   },
-  v: {
-    marginTop: 10,
-    fontWeight: 'bold',
+  containerTop: {
+    
+  },
+  mydocs: {
+    borderWidth: 0.5,
+    borderColor: GRAY,
+    borderRadius: 10, 
+    margin: 10,
+    padding:20,
+  },
+  title: {
+    color: BLACK,
+    //marginTop: 5,
+    fontWeight: '900',
+    borderBottomWidth: 0.5, 
+    borderBottomColor: BLACK,
+    paddingVertical: 5,
+    marginHorizontal:10,
   }
 });
 export default HomeScreen;
