@@ -20,17 +20,11 @@ const SignInScreen = ({ navigation }) => {
   const passwordRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [containerWidth, setContainerWidth] = useState(0);
-  const [fontSize, setFontSize] = useState(30);
 
   useEffect(() => {
     setDisabled(!id || !password);
   }, [id, password]);
-  useEffect(() => {
-    if (containerWidth > 0) {
-      setFontSize(containerWidth * 0.8);
-    }
-  }, [containerWidth]);
+
   const handleDismissKeyboard = () => {
     Keyboard.dismiss();
   };
@@ -90,7 +84,7 @@ const onSubmit = async () => {
         <View style={styles.titleContainer}>
           <Image source={require('../img/logo.png')} style={styles.image} />
           <Text
-            style={[styles.textContainer, {fontSize}, {alignSelf: 'center'}]}>
+            style={[styles.textContainer, {alignSelf: 'center'}]}>
             스마트 전자서명 시스템
           </Text>
         </View>
@@ -163,7 +157,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     alignItems: 'center',
-    fontSize: 5,
+    fontSize: 30,
     justifyContent: 'flex-start',
     fontWeight: '900',
   },
