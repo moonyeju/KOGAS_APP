@@ -19,8 +19,8 @@ const HomeScreen = () => {
 
 useEffect(() => {
   getMainChart();
-  getList();
-}, [signatureAll,signatureClear,recentAll,recentClear]);
+}, [signatureAll, signatureClear, recentAll, recentClear]);
+  
 const getMainChart = async () => {
   try {
     const response = await fetch(`${url}/main_chart`, {
@@ -43,7 +43,9 @@ const getMainChart = async () => {
       console.error('데이터를 가져오는 중 오류 발생:', error);
     }
   };
-  
+  useEffect(() => {
+  getList();
+}, []);
 const getList = async () => {
   try {
     const response = await fetch(`${url}/list`, {

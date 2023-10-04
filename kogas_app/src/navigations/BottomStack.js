@@ -2,8 +2,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen.js';
 import {PRIMARY, WHITE} from '../color';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-import SignatureListScreen from '../screens/SignatureListScreen.js';
 import SettingsScreen from '../screens/SettingsScreen.js';
 import SignatureScreen from '../screens/SignatureScreen.js';
 
