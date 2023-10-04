@@ -36,8 +36,8 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator
-        initialRouteName={session!==undefined ? 'Main' : 'Login'}  // 세션 정보에 따라 초기 라우트 설정
-        //initialRouteName={'Login'}  // 세션 정보에 따라 초기 라우트 설정
+        //initialRouteName={session!==undefined ? 'Main' : 'Login'}  // 세션 정보에 따라 초기 라우트 설정
+        initialRouteName={'Login'}  // 세션 정보에 따라 초기 라우트 설정
         screenOptions={{ headerShown: false }}
       >
         <RootStack.Screen name="Login" component={SignInScreen} />

@@ -20,11 +20,17 @@ const SignInScreen = ({ navigation }) => {
   const passwordRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [fontSize, setFontSize] = useState(30);
 
   useEffect(() => {
     setDisabled(!id || !password);
   }, [id, password]);
-
+  useEffect(() => {
+    if (containerWidth > 0) {
+      setFontSize(containerWidth * 0.8);
+    }
+  }, [containerWidth]);
   const handleDismissKeyboard = () => {
     Keyboard.dismiss();
   };
@@ -81,12 +87,18 @@ const onSubmit = async () => {
   return (
     <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
       <View style={styles.container}>
-        <Text style={styles.text}>스마트 전자서명 시스템</Text>
-        <View style={styles.view}>
+        <View style={styles.titleContainer}>
+          <Image source={require('../img/logo.png')} style={styles.image} />
+          <Text
+            style={[styles.textContainer, {fontSize}, {alignSelf: 'center'}]}>
+            스마트 전자서명 시스템
+          </Text>
+        </View>
+        <View style={styles.viewContainer}>
           <TextInput
             value={id}
-            onChangeText={(text) => setId(text.trim())}
-            title={'아이디'}
+            onChangeText={text => setId(text.trim())}
+            placeholder={'아이디'}
             returnKeyType={ReturnKeyTypes.NEXT}
             iconName={IconNames.ID}
             onSubmitEditing={() => passwordRef.current.focus()}
@@ -94,8 +106,8 @@ const onSubmit = async () => {
           <TextInput
             ref={passwordRef}
             value={password}
-            onChangeText={(text) => setPassword(text.trim())}
-            title={'비밀번호'}
+            onChangeText={text => setPassword(text.trim())}
+            placeholder={'비밀번호'}
             secureTextEntry
             iconName={IconNames.PASSWORD}
             onSubmitEditing={onSubmit}
@@ -121,33 +133,40 @@ SignInScreen.propTypes = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: 20,
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  view: {
-    width: '70%',
+  titleContainer: {
+    width: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
   },
-  view2: {
-    width: '65%',
+  image: {
+    flex: 1,
+    width: '60%',
+    resizeMode: 'contain',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  viewContainer: {
+    flex: 2,
+    width: '90%',
   },
   buttonContainer: {
     padding: 5,
     marginTop: 10,
   },
   textContainer: {
+    flex: 1,
     padding: 10,
-    flexDirection: 'row',
     alignItems: 'center',
     fontSize: 5,
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-start',
+    fontWeight: '900',
   },
-  text: {
-    fontSize: 25,
-    padding: 30,
-    fontWeight: 'bold',
-  },
-
-  line: { flex: 1, height: 1, backgroundColor: 'black' },
 });
 
 export default SignInScreen;
