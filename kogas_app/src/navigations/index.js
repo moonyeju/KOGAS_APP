@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import SignInScreen from '../screens/SignInScreen';
 import MainStack from './MainStack';
 import { url } from '../url';
+import PDFOpen from '../test/PdfOpen';
 
 const RootStack = createStackNavigator();
 
@@ -36,12 +37,13 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator
-        //initialRouteName={session!==undefined ? 'Main' : 'Login'}  // 세션 정보에 따라 초기 라우트 설정
-        initialRouteName={'Login'}  // 세션 정보에 따라 초기 라우트 설정
+        initialRouteName={session!==undefined ? 'Main' : 'Login'}  // 세션 정보에 따라 초기 라우트 설정
+        //initialRouteName={'Login'}  // 세션 정보에 따라 초기 라우트 설정
         screenOptions={{ headerShown: false }}
       >
         <RootStack.Screen name="Login" component={SignInScreen} />
         <RootStack.Screen name="Main" component={MainStack} />
+        <RootStack.Screen name="pdf" component={PDFOpen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
