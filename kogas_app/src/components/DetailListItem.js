@@ -1,9 +1,21 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {memo} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 
 const DetailListItem = memo(({name, item}) => {
   const navigation = useNavigation();
+  const [statusMessage, setStatusMessage] = useState('');
+
+  useEffect(() => {
+    if (item.status === 'Y') {
+      setStatusMessage("서명완료");
+    } else if (item.status === 'N') {
+      setStatusMessage("진행중");
+    } else if (item.status === 'X') {
+      setStatusMessage("반려");
+  }
+  }, [statusMessage]);
   return (
     <Pressable>
       <View style={styles.container}>
@@ -13,8 +25,8 @@ const DetailListItem = memo(({name, item}) => {
         </View>
 
         <View style={styles.right}>
-            <Text>{item.status}</Text>
-            <Text>{item.date}</Text>
+            <Text>{statusMessage}</Text>
+          <Text>{item.datetime}</Text>
         </View>
       </View>
     </Pressable>

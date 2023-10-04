@@ -29,34 +29,45 @@ const SignInScreen = ({ navigation }) => {
     Keyboard.dismiss();
   };
 
-  const onSubmit = async () => {
+const onSubmit = async () => {
     if (!disabled && !isLoading) {
       Keyboard.dismiss();
       setIsLoading(true);
       try {
-        // 서버로 보낼 데이터 생성
-        const data = {
-                username: id,
-                password: password
-            };
-            const response = await fetch(`${url}/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data),
-                
-            });// 서버의 실제 엔드포인트로 변경해야 합니다.
-        if (response.status === 200) {
-          // 로그인 성공 후 메인 화면으로 이동
-          Alert.alert('로그인 성공');
-          navigation.navigate('Main');
-        }else {
-          Alert.alert('아이디 또는 비밀번호를 다시 확인해주세요.');
-          setIsLoading(false);
-        }
-      } catch (error) {
-        Alert.alert('로그인 실패', error.message, [
+        fetch(`${url}/login`, {
+          method: 'POST',
+          body: JSON.stringify({
+            username: id,
+            password: password,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+            try {
+              //await SecureStore.setItemAsync('Token', token);
+              // 로그인 성공 후 메인 화면으로 이동
+              console.log("성공")
+              Alert.alert('로그인 성공');
+              try {
+                const response = await fetch(`${url}/`); // 세션 정보를 가져오는 엔드포인트로 변경
+                if (response.ok) {
+                  console.log('세션성공');
+                    navigation.navigate('Main');
+                } else {
+                  console.error('세션 정보를 가져오는 데 실패했습니다.');
+                }
+              } catch (error) {
+                console.error('오류:', error);
+              }
+            } catch (e) {
+              console.log("실패")
+              Alert.alert('로그인 실패');
+              setIsLoading(false);
+            }
+      } catch (e) {
+        console.log("실패")
+        Alert.alert('로그인 실패', e, [
           {
             text: 'Ok',
             onPress: () => setIsLoading(false),
@@ -65,6 +76,7 @@ const SignInScreen = ({ navigation }) => {
       }
     }
   };
+
 
   return (
     <TouchableWithoutFeedback onPress={handleDismissKeyboard}>

@@ -1,15 +1,35 @@
-import { StyleSheet, Switch, Text, View } from 'react-native';
+import { Alert, StyleSheet, Switch, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { GRAY, PRIMARY, WHITE } from '../color';
 import { useState } from 'react';
 import Button from '../components/Button';
+import { url } from '../url';
 
-const SettingsScreen = ({navigation}) => {
+const SettingsScreen = ({ navigation }) => {
   const [alarm, setAlarm] = useState(false);
   const [dark, setDark] = useState(false);
 
   const toggleSwitchAlarm = () => setAlarm((previousState) => !previousState);
   const toggleSwitchDark = () => setDark((previousState) => !previousState);
+
+  const handleLogout = () => {
+    fetch(`${url}/logout`, {
+      method: 'POST',
+      credentials: 'same-origin'
+    })
+      .then((response) => {
+        console.log(response.status);
+        if (response.status === 200) {
+          navigation.navigate('Login');
+        } else {
+          Alert.alert('로그아웃 실패');
+        }
+      })
+      .catch((error) => {
+        console.error('로그아웃 중 오류 발생:', error);
+        Alert.alert('로그아웃 중 오류가 발생했습니다.');
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -26,41 +46,24 @@ const SettingsScreen = ({navigation}) => {
             />
           </View>
         </View>
-        {alarm && ( // 알림 설정이 켜져 있을 때만 하단 텍스트를 표시
+        {alarm && (
           <View>
-            <Text>시간대별알림설정 여부</Text>
+            <Text>시간대별 알림 설정 여부</Text>
           </View>
         )}
-        {/* <View style={styles.textContainer}>
-          <Text style={styles.text}>다크 모드</Text>
-          <View style={styles.switchStyle}>
-            <Switch
-              trackColor={{ false: GRAY, true: PRIMARY.DEFAULT }}
-              thumbColor={WHITE}
-              ios_backgroundColor={GRAY}
-              onValueChange={toggleSwitchDark}
-              value={dark}
-            />
-          </View>
-        </View> */}
         <View style={styles.view}>
-          <Button
-              title={'기기등록'}
-          />
-          </View>
+          <Button title={'기기 등록'} onPress={() => {}} />
+        </View>
         <View style={styles.view}>
-          <Button
-            title={'로그아웃'}
-            onPress={() => {
-          navigation.navigate('Login');
-    }}
-          />
-          </View>
+          <Button title={'로그아웃'} onPress={handleLogout} />
+        </View>
       </View>
     </View>
   );
 };
+
 SettingsScreen.propTypes = {};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
   },
   view: {
     margin: 15,
-    
-  }
+  },
 });
+
 export default SettingsScreen;
