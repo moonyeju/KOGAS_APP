@@ -117,7 +117,7 @@ const ListDetailScreen = ({ route, navigation }) => {
         <Text style={styles.date}>기안자: {main_department} {name}</Text>
         <Text style={styles.date}>기안일자: {reg_date}</Text>
       </View>
-      <Button title={'문서 보기'} />
+      <Button title={'문서 보기'} onPress={()=>navigation.navigate('PDF')}/>
       <View>
         <Text style={styles.v}>서명 정보</Text>
         <FlatList

@@ -7,6 +7,7 @@ import { PRIMARY } from '../color';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
 import { url } from '../url';
+import PDF from '../components/PDF';
 const Stack = createStackNavigator();
 
 
@@ -58,7 +59,9 @@ const MainStack = () => {
         }}
       />
       <Stack.Screen name="ListDetail"
-        component={ListDetailScreen}/>
+        component={ListDetailScreen} />
+      <Stack.Screen name="PDF"
+        component={PDF}/>
       </Stack.Navigator>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Circle, G, Svg, Text } from 'react-native-svg';
-import { BLACK } from '../color';
+import { BLACK, PRIMARY } from '../color';
 
 const CircularProgressBar = ({ percentage }) => {
   // 원의 반지름
@@ -39,7 +39,7 @@ const CircularProgressBar = ({ percentage }) => {
             cx={centerX}
             cy={centerY}
             fill="none"
-            stroke="#007AFF" // 원형 그래프의 색상
+            stroke={PRIMARY.DEFAULT} // 원형 그래프의 색상
             strokeWidth={10} // 원형 그래프의 두께
             strokeDasharray={`${circumference}, ${circumference}`}
             strokeDashoffset={circumference - (percentage / 100) * circumference}
