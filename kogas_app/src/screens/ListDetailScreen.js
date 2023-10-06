@@ -7,7 +7,7 @@ import {
   Alert,
   Linking,
 } from 'react-native';
-import {GRAY} from '../color';
+import {GRAY, WHITE} from '../color';
 import DetailListItem from '../components/DetailListItem';
 import {useEffect, useState} from 'react';
 import {pdfurl, url} from '../url';
@@ -167,7 +167,13 @@ const ListDetailScreen = ({route, navigation}) => {
         </Text>
         <Text style={styles.date}>기안일자: {reg_date}</Text>
       </View>
-      <Button title={'문서 보기'} onPress={openPDFInBrowser} />
+      <View>
+        <Button
+          title={'문서 보기'}
+          style={styles.doc}
+          onPress={openPDFInBrowser}
+        />
+      </View>
       <View>
         <Text style={styles.v}>서명 정보</Text>
         <FlatList
@@ -203,6 +209,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontWeight: 'bold',
   },
+  doc: {},
 });
 
 export default ListDetailScreen;
