@@ -6,6 +6,7 @@ import MainStack from './MainStack';
 import {url} from '../url';
 import PDFOpen from '../test/PdfOpen';
 import LoadingScreen from '../screens/LoadingScreen';
+import pushalarm from '../test/pushalarm';
 
 const RootStack = createStackNavigator();
 
@@ -41,11 +42,11 @@ const Navigation = () => {
     <NavigationContainer>
       <RootStack.Navigator
         initialRouteName={session !== undefined ? 'Main' : 'Login'} // 세션 정보에 따라 초기 라우트 설정
-        //initialRouteName={'pdf'}  // 세션 정보에 따라 초기 라우트 설정
+        //initialRouteName={'push'} // 세션 정보에 따라 초기 라우트 설정
         screenOptions={{headerShown: false}}>
         <RootStack.Screen name="Login" component={SignInScreen} />
         <RootStack.Screen name="Main" component={MainStack} />
-        {/* <RootStack.Screen name="pdf" component={PDFOpen} /> */}
+        <RootStack.Screen name="push" component={pushalarm} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

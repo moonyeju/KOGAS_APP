@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "532817120447",
+    "project_id": "kogasapp-ab73b",
+    "storage_bucket": "kogasapp-ab73b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532817120447:android:cb82221a21c25640b94a0a",
+        "android_client_info": {
+          "package_name": "com.kogas_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCs71td4hBCSOME7AA0Aev1mPOpUCiZiXs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

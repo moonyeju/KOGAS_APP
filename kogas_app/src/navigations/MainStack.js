@@ -1,4 +1,4 @@
-import {Button, Text, View} from 'react-native';
+import {Button, Text, View, Image} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomStack from './BottomStack';
 import ListDetailScreen from '../screens/ListDetailScreen';
@@ -7,7 +7,8 @@ import {PRIMARY} from '../color';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useEffect, useState} from 'react';
 import {url} from '../url';
-import PDF from '../components/PDF';
+import HomeScreen from '../screens/HomeScreen';
+//import {Image} from 'react-native-svg';
 const Stack = createStackNavigator();
 
 const MainStack = () => {
@@ -40,19 +41,18 @@ const MainStack = () => {
     <Stack.Navigator
       initialRouteName="BottomHome"
       screenOptions={{
-        title: 'KOGAS',
-        tabBarActiveTintColor: PRIMARY.DEFAULT,
-        headerTitleAlign: 'center',
-        headerTintColor: PRIMARY.DEFAULT,
-        headerTitleStyle: {fontWeight: '700'},
         headerRight: () => (
           <TouchableOpacity
             onPress={() => {
               /* 오른쪽 헤더 버튼 눌렀을 때 수행할 동작 */
             }}>
-            <View>
-              <Text>{department}</Text>
-              <Text>{user}</Text>
+            <View style={{marginRight: 12}}>
+              <Text style={{textAlign: 'right', fontSize: 12, fontWeight: 700}}>
+                {department}
+              </Text>
+              <Text style={{textAlign: 'right', fontSize: 12, fontWeight: 700}}>
+                {user}
+              </Text>
             </View>
           </TouchableOpacity>
         ),
@@ -62,11 +62,21 @@ const MainStack = () => {
         component={BottomStack}
         options={{
           headerLeft: null, // 뒤로 가기 버튼 숨김
+          headerTitle: () => (
+            <Image
+              source={require('../img/logo.png')}
+              style={{
+                width: 150,
+                height: 150,
+                resizeMode: 'contain',
+                marginTop: 5,
+              }}
+            />
+          ),
+          headerTitleAlign: 'center',
         }}
       />
       <Stack.Screen name="ListDetail" component={ListDetailScreen} />
-      {/* <Stack.Screen name="PDF"
-        component={PDF}/> */}
     </Stack.Navigator>
   );
 };

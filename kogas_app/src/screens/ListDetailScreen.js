@@ -48,12 +48,12 @@ const ListDetailScreen = ({route, navigation}) => {
   };
 
   useEffect(() => {
+    console.log('re' + reload);
+
     getList();
-  }, []);
+  }, [reload]);
 
   const getList = async () => {
-    //await SInfo.getItem('SessionId', {}).then(sessionId => {
-    //if (sessionId) {
     fetch(`${url}/show_sig`, {
       method: 'POST',
       body: JSON.stringify({
@@ -80,16 +80,19 @@ const ListDetailScreen = ({route, navigation}) => {
 
   // 서명 완료, 승인, 반려 여부에 따라 액션 타입 설정
   useEffect(() => {
+    console.log('re' + reload);
     if (filteredItem) {
       setActionType(filteredItem.status);
     }
-  }, [filteredItem, actionType]);
+  }, [list, filteredItem, actionType, reload]);
 
   const accept = async () => {
     fetch(`${url}/update_okay`, {
       method: 'POST',
       body: JSON.stringify({
         answer: 1,
+        document_id: document_id,
+        user: user,
       }),
       headers: {
         'Content-Type': 'application/json',

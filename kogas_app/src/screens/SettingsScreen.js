@@ -19,7 +19,10 @@ const SettingsScreen = ({navigation}) => {
       .then(response => {
         console.log(response.status);
         if (response.status === 200) {
-          navigation.navigate('Login');
+          navigation.reset({
+            index: 0, // 첫 번째 화면으로 이동
+            routes: [{name: 'Login'}], // 'Login'은 로그인 화면의 이름으로 대체해야 합니다.
+          });
         } else {
           Alert.alert('로그아웃 실패');
         }

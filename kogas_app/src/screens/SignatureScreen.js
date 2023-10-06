@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import ListItem from '../components/ListItem';
 import {url} from '../url';
-import {WHITE, RADIO, PRIMARY} from '../color';
+import {WHITE, RADIO, PRIMARY, BLACK} from '../color';
 
 // 라디오 버튼 컴포넌트
 const RadioButton = ({options, selectedOption, onSelect}) => {
@@ -163,8 +163,19 @@ const SignatureScreen = () => {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={{textAlign: 'center'}}>내 문서 현황</Text>
-        <Text style={{textAlign: 'center'}}>내 문서 현황을 보여드립니다</Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 15,
+            fontWeight: 900,
+            marginTop: 10,
+            color: BLACK,
+          }}>
+          문서 현황
+        </Text>
+        <Text style={{textAlign: 'center', fontWeight: 700, marginTop: 5}}>
+          문서 현황을 보여드립니다
+        </Text>
       </View>
       {/* 라디오 버튼 컴포넌트 사용 */}
       <RadioButton
@@ -172,22 +183,24 @@ const SignatureScreen = () => {
         selectedOption={selectedOption}
         onSelect={handleSelect}
       />
-      {selectedList.length === 0 ? (
-        <Text style={{textAlign: 'center', marginTop: 20}}>
-          {selectedOption} 없습니다.
-        </Text>
-      ) : (
-        <FlatList
-          data={selectedList}
-          renderItem={({item}) => (
-            <ListItem name="SignatureScreen" item={item} />
-          )}
-          windowSize={5}
-          ListHeaderComponent={View}
-          ListHeaderComponentStyle={{height: 10}}
-          contentContainerStyle={styles.flatListContainer}
-        />
-      )}
+      <ScrollView>
+        {selectedList.length === 0 ? (
+          <Text style={{textAlign: 'center', marginTop: 20}}>
+            {selectedOption} 없습니다.
+          </Text>
+        ) : (
+          <FlatList
+            data={selectedList}
+            renderItem={({item}) => (
+              <ListItem name="SignatureScreen" item={item} />
+            )}
+            windowSize={5}
+            ListHeaderComponent={View}
+            ListHeaderComponentStyle={{height: 10}}
+            contentContainerStyle={styles.flatListContainer}
+          />
+        )}
+      </ScrollView>
     </View>
   );
 };
