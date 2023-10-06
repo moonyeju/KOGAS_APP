@@ -1,22 +1,21 @@
-import { Button,Text ,View} from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {Button, Text, View} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import BottomStack from './BottomStack';
 import ListDetailScreen from '../screens/ListDetailScreen';
 import {useNavigation} from '@react-navigation/native';
-import { PRIMARY } from '../color';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useEffect, useState } from 'react';
-import { url } from '../url';
+import {PRIMARY} from '../color';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useEffect, useState} from 'react';
+import {url} from '../url';
 import PDF from '../components/PDF';
 const Stack = createStackNavigator();
 
-
 const MainStack = () => {
   const navigation = useNavigation();
-  const [user, setUser] = useState(''); 
-  const [department, setDepartment] = useState(''); 
+  const [user, setUser] = useState('');
+  const [department, setDepartment] = useState('');
   useEffect(() => {
-     // 세션 정보를 가져옴
+    // 세션 정보를 가져옴
     getSession();
   }, []); // 여기에서는 세션 정보를 한 번만 가져오도록 수정
 
@@ -36,33 +35,39 @@ const MainStack = () => {
       console.error('오류:', error);
     }
   };
-  
+
   return (
-      <Stack.Navigator initialRouteName="BottomHome" screenOptions={{
+    <Stack.Navigator
+      initialRouteName="BottomHome"
+      screenOptions={{
         title: 'KOGAS',
         tabBarActiveTintColor: PRIMARY.DEFAULT,
         headerTitleAlign: 'center',
         headerTintColor: PRIMARY.DEFAULT,
-      headerTitleStyle: { fontWeight: '700' },
+        headerTitleStyle: {fontWeight: '700'},
         headerRight: () => (
-    <TouchableOpacity onPress={() => {/* 오른쪽 헤더 버튼 눌렀을 때 수행할 동작 */}}>
-            <View><Text>{department}</Text>
-            <Text>{user}</Text></View>
-    </TouchableOpacity>
-  ),
+          <TouchableOpacity
+            onPress={() => {
+              /* 오른쪽 헤더 버튼 눌렀을 때 수행할 동작 */
+            }}>
+            <View>
+              <Text>{department}</Text>
+              <Text>{user}</Text>
+            </View>
+          </TouchableOpacity>
+        ),
       }}>
-          <Stack.Screen
+      <Stack.Screen
         name="BottomHome"
         component={BottomStack}
         options={{
           headerLeft: null, // 뒤로 가기 버튼 숨김
         }}
       />
-      <Stack.Screen name="ListDetail"
-        component={ListDetailScreen} />
-      <Stack.Screen name="PDF"
-        component={PDF}/>
-      </Stack.Navigator>
+      <Stack.Screen name="ListDetail" component={ListDetailScreen} />
+      {/* <Stack.Screen name="PDF"
+        component={PDF}/> */}
+    </Stack.Navigator>
   );
 };
 export default MainStack;

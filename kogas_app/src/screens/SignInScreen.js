@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,11 +10,11 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import Button from '../components/Button';
-import TextInput, { IconNames, ReturnKeyTypes } from '../components/TextInput';
+import TextInput, {IconNames, ReturnKeyTypes} from '../components/TextInput';
 import PropTypes from 'prop-types';
 import {url} from '../url';
 
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = ({navigation}) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const passwordRef = useRef(null);
@@ -29,12 +29,25 @@ const SignInScreen = ({ navigation }) => {
     Keyboard.dismiss();
   };
 
-const onSubmit = async () => {
+  const handleFailure = error => {
+    Alert.alert('알림', error, [
+      {
+        text: '확인',
+        onPress: () => {
+          setIsLoading(false);
+          setId('');
+          setPassword('');
+        },
+      },
+    ]);
+  };
+
+  const onSubmit = async () => {
     if (!disabled && !isLoading) {
       Keyboard.dismiss();
       setIsLoading(true);
       try {
-        fetch(`${url}/login`, {
+        const loginResponse = await fetch(`${url}/login`, {
           method: 'POST',
           body: JSON.stringify({
             username: id,
@@ -43,48 +56,28 @@ const onSubmit = async () => {
           headers: {
             'Content-Type': 'application/json',
           },
-        })
-            try {
-              //await SecureStore.setItemAsync('Token', token);
-              // 로그인 성공 후 메인 화면으로 이동
-              console.log("성공")
-              Alert.alert('로그인 성공');
-              try {
-                const response = await fetch(`${url}/`); // 세션 정보를 가져오는 엔드포인트로 변경
-                if (response.ok) {
-                  console.log('세션성공');
-                    navigation.navigate('Main');
-                } else {
-                  console.error('세션 정보를 가져오는 데 실패했습니다.');
-                }
-              } catch (error) {
-                console.error('오류:', error);
-              }
-            } catch (e) {
-              console.log("실패")
-              Alert.alert('로그인 실패');
-              setIsLoading(false);
-            }
-      } catch (e) {
-        console.log("실패")
-        Alert.alert('로그인 실패', e, [
-          {
-            text: 'Ok',
-            onPress: () => setIsLoading(false),
-          },
-        ]);
+        });
+        const loginData = await loginResponse.json();
+
+        if (loginResponse.ok) {
+          console.log('ssdata' + loginData.status);
+          Alert.alert(loginData.message);
+          navigation.navigate('Main');
+        } else {
+          handleFailure(loginData.message);
+        }
+      } catch (error) {
+        handleFailure('로그인 요청 중 오류가 발생했습니다.');
       }
     }
   };
-
 
   return (
     <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Image source={require('../img/logo.png')} style={styles.image} />
-          <Text
-            style={[styles.textContainer, {alignSelf: 'center'}]}>
+          <Text style={[styles.textContainer, {alignSelf: 'center'}]}>
             스마트 전자서명 시스템
           </Text>
         </View>

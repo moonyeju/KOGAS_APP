@@ -1,23 +1,22 @@
-import { Alert, StyleSheet, Switch, Text, View } from 'react-native';
+import {Alert, StyleSheet, Switch, Text, View} from 'react-native';
 import PropTypes from 'prop-types';
-import { GRAY, PRIMARY, WHITE } from '../color';
-import { useState } from 'react';
+import {GRAY, PRIMARY, WHITE} from '../color';
+import {useState} from 'react';
 import Button from '../components/Button';
-import { url } from '../url';
+import {url} from '../url';
+// import messaging from '@react-native-firebase/messaging';
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = ({navigation}) => {
   const [alarm, setAlarm] = useState(false);
-  const [dark, setDark] = useState(false);
-
-  const toggleSwitchAlarm = () => setAlarm((previousState) => !previousState);
-  const toggleSwitchDark = () => setDark((previousState) => !previousState);
+  const [deviceToken, setDeviceToken] = useState('');
+  const toggleSwitchAlarm = () => setAlarm(previousState => !previousState);
 
   const handleLogout = () => {
     fetch(`${url}/logout`, {
       method: 'POST',
-      credentials: 'same-origin'
+      credentials: 'same-origin',
     })
-      .then((response) => {
+      .then(response => {
         console.log(response.status);
         if (response.status === 200) {
           navigation.navigate('Login');
@@ -25,11 +24,18 @@ const SettingsScreen = ({ navigation }) => {
           Alert.alert('로그아웃 실패');
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('로그아웃 중 오류 발생:', error);
         Alert.alert('로그아웃 중 오류가 발생했습니다.');
       });
   };
+  // 알림설정을 켜면 기기가 등록되는 형태로
+  // const getDeviceToken = async () => {
+  //   const token = await messaging().getToken();
+  //   console.log('[Device Token]', token);
+  //   setDeviceToken(token);
+  //   Alert.alert('기기가 등록되었습니다.')
+  // };
 
   return (
     <View style={styles.container}>
@@ -38,7 +44,7 @@ const SettingsScreen = ({ navigation }) => {
           <Text style={styles.text}>알림 설정</Text>
           <View style={styles.switchStyle}>
             <Switch
-              trackColor={{ false: GRAY, true: PRIMARY.DEFAULT }}
+              trackColor={{false: GRAY, true: PRIMARY.DEFAULT}}
               thumbColor={WHITE}
               ios_backgroundColor={GRAY}
               onValueChange={toggleSwitchAlarm}
@@ -48,14 +54,22 @@ const SettingsScreen = ({ navigation }) => {
         </View>
         {alarm && (
           <View>
-            <Text>시간대별 알림 설정 여부</Text>
+            <Text style={{textAlign: 'center', fontWeight: 800}}>
+              시간대별 알림 설정 여부
+            </Text>
           </View>
         )}
-        <View style={styles.view}>
-          <Button title={'기기 등록'} onPress={() => {}} />
-        </View>
-        <View style={styles.view}>
-          <Button title={'로그아웃'} onPress={handleLogout} />
+        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+          <View style={styles.view}>
+            {/* {alarm ? (
+            <Button title={'기기 등록 제거'} onPress={() => {Alert.alert('기기가 제거되었습니다.')}} />
+          ) : (
+            <Button title={'기기 등록 '} onPress={()=>Alert.alert('기기 등록 되었습니다.')} />
+          )} */}
+          </View>
+          <View style={styles.view}>
+            <Button title={'로그아웃'} onPress={handleLogout} />
+          </View>
         </View>
       </View>
     </View>
