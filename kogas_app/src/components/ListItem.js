@@ -36,11 +36,10 @@ const ListItem = memo(({name, item}) => {
       }}
       hitSlop={10}>
       <View style={styles.container}>
-        <View>
+        <View style={{flexDirection: 'column'}}>
           <View style={{flexDirection: 'row'}}>
             <View
               style={{
-                flexDirection: 'row',
                 width: 3,
                 height: 14,
                 backgroundColor: stickColor,
@@ -49,18 +48,20 @@ const ListItem = memo(({name, item}) => {
                 marginTop: 4,
                 marginBottom: 7,
               }}></View>
-            <Text style={{fontWeight: 800, fontSize: 13}}>{stageMessage}</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 13, color: BLACK}}>
+              {stageMessage}
+            </Text>
           </View>
           <Text
             style={{
               color: BLACK,
-              fontWeight: 900,
+              fontWeight: 'bold',
               marginBottom: 5,
-              fontSize: 14,
+              fontSize: 13,
             }}>
             {item.document_name}
           </Text>
-          <Text style={{fontWeight: 600, fontSize: 13}}>
+          <Text style={{fontSize: 13}}>
             기안자: {item.main_department} {item.name}
           </Text>
         </View>
@@ -78,17 +79,19 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: WHITE,
     flexDirection: 'column',
-    marginHorizontal: 10,
-    marginVertical: 8,
-    paddingVertical: 9,
-    paddingHorizontal: 15,
+    marginHorizontal: '4%',
+    marginVertical: '2%',
+    paddingVertical: '2%',
+    paddingHorizontal: '5%',
     borderRadius: 20,
     borderColor: WHITE,
-    borderWidth: 1,
-    elevation: 10,
+    // borderWidth: 1,
+    elevation: 6,
   },
   textContainer: {
-    marginTop: 10,
+    marginVertical: 5,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
 });
 

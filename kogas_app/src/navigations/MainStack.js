@@ -1,9 +1,9 @@
-import {Button, Text, View, Image} from 'react-native';
+import {Button, Text, View, Image, Alert} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomStack from './BottomStack';
 import ListDetailScreen from '../screens/ListDetailScreen';
 import {useNavigation} from '@react-navigation/native';
-import {PRIMARY} from '../color';
+import {BLACK, GRAY, PRIMARY} from '../color';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useEffect, useState} from 'react';
 import {url} from '../url';
@@ -27,8 +27,18 @@ const MainStack = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('서버에서 받은 세션 정보mainstack:', data);
-        setUser(data.user);
-        setDepartment(data.department);
+        if (Object.keys(data).length === 0) {
+          Alert.alert('세션이 만료되었습니다.');
+          // 데이터가 비어있으면 로그인 화면으로 이동
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'Login'}],
+          });
+        } else {
+          // 데이터가 비어있지 않으면 정보 설정
+          setUser(data.user);
+          setDepartment(data.department);
+        }
       } else {
         console.error('세션 정보를 가져오는 데 실패했습니다.');
       }
@@ -42,19 +52,26 @@ const MainStack = () => {
       initialRouteName="BottomHome"
       screenOptions={{
         headerRight: () => (
-          <TouchableOpacity
-            onPress={() => {
-              /* 오른쪽 헤더 버튼 눌렀을 때 수행할 동작 */
-            }}>
-            <View style={{marginRight: 12}}>
-              <Text style={{textAlign: 'right', fontSize: 12, fontWeight: 700}}>
-                {department}
-              </Text>
-              <Text style={{textAlign: 'right', fontSize: 12, fontWeight: 700}}>
-                {user}
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <View style={{marginRight: 12}}>
+            <Text
+              style={{
+                textAlign: 'right',
+                fontSize: 12,
+                fontWeight: 'bold',
+                color: BLACK,
+              }}>
+              {department}
+            </Text>
+            <Text
+              style={{
+                textAlign: 'right',
+                fontSize: 12,
+                fontWeight: 'bold',
+                color: BLACK,
+              }}>
+              {user}
+            </Text>
+          </View>
         ),
       }}>
       <Stack.Screen
@@ -76,7 +93,24 @@ const MainStack = () => {
           headerTitleAlign: 'center',
         }}
       />
-      <Stack.Screen name="ListDetail" component={ListDetailScreen} />
+      <Stack.Screen
+        name="ListDetail"
+        component={ListDetailScreen}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require('../img/logo.png')}
+              style={{
+                width: 150,
+                height: 150,
+                resizeMode: 'contain',
+                marginTop: 5,
+              }}
+            />
+          ),
+          headerTitleAlign: 'center',
+        }}
+      />
     </Stack.Navigator>
   );
 };

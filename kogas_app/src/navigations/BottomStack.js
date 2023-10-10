@@ -11,7 +11,11 @@ const BottomStack = () => {
   Icon.loadFont(); // Ionicons 폰트 로드
   return (
     <Tab.Navigator
-      initialRouteName="Home" screenOptions={{ headerShown: false }}>
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: PRIMARY.DEFAULT,
+      }}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}

@@ -55,13 +55,13 @@ const SettingsScreen = ({navigation}) => {
             />
           </View>
         </View>
-        {alarm && (
+        {/* {alarm && (
           <View>
             <Text style={{textAlign: 'center', fontWeight: 800}}>
               시간대별 알림 설정 여부
             </Text>
           </View>
-        )}
+        )} */}
         <View style={{flex: 1, justifyContent: 'flex-end'}}>
           <View style={styles.view}>
             {/* {alarm ? (

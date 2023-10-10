@@ -6,7 +6,7 @@ import MainStack from './MainStack';
 import {url} from '../url';
 import PDFOpen from '../test/PdfOpen';
 import LoadingScreen from '../screens/LoadingScreen';
-import pushalarm from '../test/pushalarm';
+import PushAlarm from '../test/PushAlarm';
 
 const RootStack = createStackNavigator();
 
@@ -24,7 +24,7 @@ const Navigation = () => {
       const response = await fetch(`${url}/`); // 세션 정보를 가져오는 엔드포인트로 변경
       if (response.ok) {
         const data = await response.json();
-        console.log('서버에서 받은 세션 정보index:', data.status, data);
+        console.log('서버에서 받은 세션 정보index:', data);
         setSession(data.user);
         setLoading(false); // 세션 정보가 준비되었으므로 로딩 완료
       } else {
@@ -46,7 +46,7 @@ const Navigation = () => {
         screenOptions={{headerShown: false}}>
         <RootStack.Screen name="Login" component={SignInScreen} />
         <RootStack.Screen name="Main" component={MainStack} />
-        <RootStack.Screen name="push" component={pushalarm} />
+        <RootStack.Screen name="push" component={PushAlarm} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

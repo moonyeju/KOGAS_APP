@@ -112,11 +112,13 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     flex: 1,
   },
-  containerTop: {},
+  containerBottom: {
+    flex: 1,
+  },
   mydocs: {
     flexDirection: 'row',
-    borderWidth: 0.5,
-    borderColor: GRAY,
+    borderWidth: 1,
+    borderColor: '#F3F4F6',
     borderRadius: 10,
     margin: 8,
     padding: 10,
@@ -124,11 +126,16 @@ const styles = StyleSheet.create({
   title: {
     color: BLACK,
     //marginTop: 5,
-    fontWeight: '900',
+    fontWeight: 'bold',
     borderBottomWidth: 0.5,
-    borderBottomColor: BLACK,
+    borderBottomColor: GRAY,
     paddingVertical: 5,
     marginHorizontal: 10,
+  },
+  text: {
+    marginLeft: 10,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
 });
 export default HomeScreen;

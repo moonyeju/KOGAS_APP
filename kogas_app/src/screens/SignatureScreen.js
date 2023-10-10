@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import ListItem from '../components/ListItem';
 import {url} from '../url';
-import {WHITE, RADIO, PRIMARY, BLACK} from '../color';
+import {WHITE, RADIO, PRIMARY, BLACK, GRAY} from '../color';
 
 // 라디오 버튼 컴포넌트
 const RadioButton = ({options, selectedOption, onSelect}) => {
@@ -18,18 +18,16 @@ const RadioButton = ({options, selectedOption, onSelect}) => {
           <View
             style={{
               backgroundColor:
-                selectedOption === option ? RADIO.SELECT : RADIO.DEFAULT,
-              borderRadius: selectedOption === option ? 50 : 0,
-              paddingVertical: 5,
-              paddingHorizontal: 20,
+                selectedOption === option ? PRIMARY.DEFAULT : RADIO.DEFAULT,
+              borderRadius: 20,
             }}>
             {/* 선택된 옵션에 따라 스타일 변경 */}
             <Text
               style={{
-                fontSize: 16,
-                marginRight: 10,
-                fontWeight: 800,
-                color: selectedOption === option ? 'white' : 'black',
+                marginHorizontal: 20,
+                marginVertical: 4,
+                fontWeight: 'bold',
+                color: selectedOption === option ? WHITE : BLACK,
               }}>
               {option}
             </Text>
@@ -45,7 +43,7 @@ const SignatureScreen = () => {
   //const [proceedingList, setProceedingList] = useState([]);
   //const [doneList, setDoneList] = useState([]);
   const [user, setUser] = useState('');
-  const options = ['내 기안', '진행 문서', '완료 문서'];
+  const options = ['내 문서', '진행 문서', '완료 문서'];
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedList, setSelectedList] = useState([]);
   useEffect(() => {
@@ -171,36 +169,36 @@ const SignatureScreen = () => {
             marginTop: 10,
             color: BLACK,
           }}>
-          문서 현황
+          {selectedOption} 현황
         </Text>
         <Text style={{textAlign: 'center', fontWeight: 700, marginTop: 5}}>
-          문서 현황을 보여드립니다
+          {selectedOption} 현황을 보여드립니다
         </Text>
       </View>
       {/* 라디오 버튼 컴포넌트 사용 */}
-      <RadioButton
-        options={options}
-        selectedOption={selectedOption}
-        onSelect={handleSelect}
-      />
-      <ScrollView>
-        {selectedList.length === 0 ? (
-          <Text style={{textAlign: 'center', marginTop: 20}}>
-            {selectedOption} 없습니다.
-          </Text>
-        ) : (
-          <FlatList
-            data={selectedList}
-            renderItem={({item}) => (
-              <ListItem name="SignatureScreen" item={item} />
-            )}
-            windowSize={5}
-            ListHeaderComponent={View}
-            ListHeaderComponentStyle={{height: 10}}
-            contentContainerStyle={styles.flatListContainer}
-          />
-        )}
-      </ScrollView>
+      <View style={styles.radiocontainer}>
+        <RadioButton
+          options={options}
+          selectedOption={selectedOption}
+          onSelect={handleSelect}
+        />
+      </View>
+      {selectedList.length === 0 ? (
+        <Text style={{textAlign: 'center', marginTop: 20}}>
+          {selectedOption}가 없습니다.
+        </Text>
+      ) : (
+        <FlatList
+          data={selectedList}
+          renderItem={({item}) => (
+            <ListItem name="SignatureScreen" item={item} />
+          )}
+          windowSize={5}
+          ListHeaderComponent={View}
+          ListHeaderComponentStyle={{height: 10}}
+          contentContainerStyle={styles.flatListContainer}
+        />
+      )}
     </View>
   );
 };
@@ -209,19 +207,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: WHITE,
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   flatListContainer: {
-    paddingBottom: 20, // 여백 조절
+    flex: 1,
+  },
+  radiocontainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   radioButton: {
-    width: '80%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     flexDirection: 'row',
     backgroundColor: RADIO.DEFAULT,
-    borderRadius: 50,
-    elevation: 10,
+    borderRadius: 20,
+    elevation: 5,
     marginTop: 20,
   },
 });

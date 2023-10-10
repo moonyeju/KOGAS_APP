@@ -30,7 +30,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, Button, Alert} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 
-const pushalarm = () => {
+const PushAlarm = () => {
   const [deviceToken, setDeviceToken] = useState('');
 
   useEffect(() => {
@@ -83,4 +83,4 @@ const pushalarm = () => {
   );
 };
 
-export default pushalarm;
+export default PushAlarm;

@@ -1,6 +1,7 @@
 export const WHITE = '#ffffff';
 export const BLACK = '#000000';
 export const GRAY = '#a3a3a3';
+export const RED = 'A33A23';
 
 export const PRIMARY = {
   DARK: '#0E56AA',
@@ -25,4 +26,15 @@ export const STICK = {
 
 export const SHADOW = {
   DEFAULT: '#0011FF',
+};
+
+export const CHOICEBUTTON = {
+  ALLOW: '#4AB693',
+  REJECT: '#A33A23',
+};
+
+export const STATUSTEXT = {
+  COMPLETE: '#1B84CF',
+  ING: '#868686',
+  NO: '#D25C5C',
 };

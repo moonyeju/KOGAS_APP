@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Circle, G, Svg, Text } from 'react-native-svg';
-import { BLACK, PRIMARY } from '../color';
+import {View, StyleSheet} from 'react-native';
+import {Circle, G, Svg, Text} from 'react-native-svg';
+import {BLACK, GRAY, PRIMARY} from '../color';
 
-const CircularProgressBar = ({ percentage }) => {
+const CircularProgressBar = ({percentage}) => {
   // 원의 반지름
-  const radius = 30;
+  const radius = 25;
 
   // 원의 중심 좌표
   const centerX = radius + 5; // X 좌표
@@ -30,7 +30,7 @@ const CircularProgressBar = ({ percentage }) => {
             cx={centerX}
             cy={centerY}
             fill="none"
-            stroke="#ddd"
+            stroke="#D6ECFD"
             strokeWidth={10}
           />
           {/* 원형 그래프 */}
@@ -42,13 +42,16 @@ const CircularProgressBar = ({ percentage }) => {
             stroke={PRIMARY.DEFAULT} // 원형 그래프의 색상
             strokeWidth={10} // 원형 그래프의 두께
             strokeDasharray={`${circumference}, ${circumference}`}
-            strokeDashoffset={circumference - (percentage / 100) * circumference}
+            strokeDashoffset={
+              circumference - (percentage / 100) * circumference
+            }
+            strokeLinecap="round" // 끝을 둥글게 만듦
           />
           {/* 텍스트 */}
           <Text
             x={centerX - 7}
             y={centerY + 5} // 텍스트 위치 조절
-            fontSize="15"
+            fontSize="13"
             textAnchor="middle"
             fill={BLACK} // 텍스트 색상
           >
@@ -64,7 +67,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight:10,
+    flexDirection: 'column',
+    marginHorizontal: 10,
   },
 });
 

@@ -3,16 +3,21 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   Alert,
   Linking,
+  Pressable,
+  Button,
 } from 'react-native';
-import {GRAY, WHITE} from '../color';
+import {BLACK, CHOICEBUTTON, GRAY, PRIMARY, STICK, WHITE} from '../color';
 import DetailListItem from '../components/DetailListItem';
 import {useEffect, useState} from 'react';
 import {pdfurl, url} from '../url';
+import ChoiceButton from '../components/ChoiceButton';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Modal from 'react-native-modal';
 
-const ListDetailScreen = ({route, navigation}) => {
+const ListDetailScreen = ({route, navigation, item}) => {
   const {document_id} = route.params;
   const {document_name} = route.params;
   const {name} = route.params;
@@ -24,6 +29,27 @@ const ListDetailScreen = ({route, navigation}) => {
   const [list, setList] = useState([]);
   const [actionType, setActionType] = useState(null); // 서명 완료, 승인, 반려 액션 타입
   const [reload, setReload] = useState(false); // 화면 리로드를 위한 상태 추가
+  const [stickColor, setStickColor] = useState(STICK.ING);
+  // 모달 상태 관리
+  const [isAcceptModalVisible, setAcceptModalVisible] = useState(false);
+  const [isRejectModalVisible, setRejectModalVisible] = useState(false);
+
+  // 모달 열기 및 닫기 함수
+  const showAcceptModal = () => {
+    setAcceptModalVisible(true);
+  };
+
+  const hideAcceptModal = () => {
+    setAcceptModalVisible(false);
+  };
+
+  const showRejectModal = () => {
+    setRejectModalVisible(true);
+  };
+
+  const hideRejectModal = () => {
+    setRejectModalVisible(false);
+  };
 
   useEffect(() => {
     // 세션 정보를 가져옴
@@ -48,12 +74,12 @@ const ListDetailScreen = ({route, navigation}) => {
   };
 
   useEffect(() => {
-    console.log('re' + reload);
-
     getList();
   }, [reload]);
 
   const getList = async () => {
+    //await SInfo.getItem('SessionId', {}).then(sessionId => {
+    //if (sessionId) {
     fetch(`${url}/show_sig`, {
       method: 'POST',
       body: JSON.stringify({
@@ -80,11 +106,10 @@ const ListDetailScreen = ({route, navigation}) => {
 
   // 서명 완료, 승인, 반려 여부에 따라 액션 타입 설정
   useEffect(() => {
-    console.log('re' + reload);
     if (filteredItem) {
       setActionType(filteredItem.status);
     }
-  }, [list, filteredItem, actionType, reload]);
+  }, [filteredItem, actionType]);
 
   const accept = async () => {
     fetch(`${url}/update_okay`, {
@@ -127,29 +152,72 @@ const ListDetailScreen = ({route, navigation}) => {
       });
   };
 
-  // 승인 또는 반려 버튼 클릭 시
-  const handleApproveOrReject = isApprove => {
-    const message = isApprove ? '승인하시겠습니까?' : '반려하시겠습니까?';
-    Alert.alert('알림', message, [
-      {
-        text: '예',
-        onPress: () => {
-          // 승인 또는 반려 동작 처리
-          if (isApprove) {
-            console.log('승인 처리');
-            accept();
-          } else {
-            console.log('반려 처리');
-            reject();
-          }
-        },
-      },
-      {
-        text: '아니요',
-        style: 'cancel',
-      },
-    ]);
+  const ModalOpen = ({isVisible, onClose, item}) => {
+    Icon.loadFont(); // Ionicons 폰트 로드
+    return (
+      <Modal
+        isVisible={isVisible}
+        onBackdropPress={onClose}
+        style={styles.modal}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0.5}
+        propagateSwipe>
+        <View style={styles.modalContent}>
+          <View style={styles.iconContainer}>
+            <Pressable onPress={onClose} style={styles.closeButton}>
+              <Icon name="close" color={BLACK} size={30} />
+            </Pressable>
+          </View>
+          <Text style={{fontSize: 23, fontWeight: 'bold', color: BLACK}}>
+            {item}
+          </Text>
+          <View style={styles.modalButtonContainer}>
+            <View style={styles.modalButtonStyle}>
+              <ChoiceButton
+                title={'예'}
+                onPress={() => {
+                  if (isAcceptModalVisible) {
+                    console.log('승인 처리');
+                    accept();
+                  }
+                  if (isRejectModalVisible) {
+                    console.log('반려 처리');
+                    reject();
+                  }
+                }}
+                color={CHOICEBUTTON.ALLOW}
+              />
+            </View>
+            <View style={styles.modalButtonStyle}>
+              <ChoiceButton
+                title={'아니오'}
+                onPress={onClose}
+                color={CHOICEBUTTON.REJECT}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+    );
   };
+
+  // const handleApproveOrReject = isApprove => {
+  //   const message = isApprove ? '승인하시겠습니까?' : '반려하시겠습니까?';
+  //   if (isApprove) {
+  //     <Modal
+  //       isVisible={isAcceptModalVisible}
+  //       onClose={hideAcceptModal}
+  //       item={'승인하시겠습니까?'}
+  //     />;
+  //   } else {
+  //     <Modal
+  //       isVisible={isAcceptModalVisible}
+  //       onClose={hideAcceptModal}
+  //       item={message}
+  //     />;
+  //   }
+  // };
 
   // PDF 파일을 열도록 유도하는 함수
   const openPDFInBrowser = () => {
@@ -157,25 +225,52 @@ const ListDetailScreen = ({route, navigation}) => {
     Linking.openURL(pdfUrl); // PDF 파일을 기본 브라우저로 엽니다.
   };
 
+  useEffect(() => {
+    console.log(stage);
+    if (stage === '서명 진행중') {
+      setStickColor(STICK.ING);
+    } else if (stage === '반려 처리') {
+      setStickColor(STICK.NO);
+    } else {
+      setStickColor(STICK.COMPLETE);
+    }
+  }, [stickColor]);
+
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.title}>{stage}</Text>
-        <Text style={styles.title}>{document_name}</Text>
-        <Text style={styles.date}>
-          기안자: {main_department} {name}
-        </Text>
-        <Text style={styles.date}>기안일자: {reg_date}</Text>
+      <View style={styles.topContainer}>
+        <View style={{flexDirection: 'row'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: 3,
+              height: 14,
+              backgroundColor: stickColor,
+              marginRight: 5,
+              marginLeft: 3,
+              marginTop: 4,
+              marginBottom: 7,
+            }}></View>
+          <Text style={styles.title}>{stage}</Text>
+        </View>
+        <View style={styles.toptxtContainer}>
+          <Text style={styles.title}>{document_name}</Text>
+          <Text style={styles.date}>
+            기안자: {main_department} {name}
+          </Text>
+          <View style={styles.pdfpress}>
+            <Text style={styles.date}>기안일자: {reg_date}</Text>
+            <Pressable onPress={openPDFInBrowser}>
+              <Text style={styles.pdfbutton}>문서보기</Text>
+            </Pressable>
+          </View>
+        </View>
       </View>
-      <View>
-        <Button
-          title={'문서 보기'}
-          style={styles.doc}
-          onPress={openPDFInBrowser}
-        />
-      </View>
-      <View>
-        <Text style={styles.v}>서명 정보</Text>
+      <View style={styles.mainContainer}>
+        <View style={{flexDirection: 'row'}}>
+          <View style={styles.stick}></View>
+          <Text style={styles.v}>서명 정보</Text>
+        </View>
         <FlatList
           data={list}
           renderItem={({item}) => (
@@ -185,31 +280,164 @@ const ListDetailScreen = ({route, navigation}) => {
           ListHeaderComponent={View}
           ListHeaderComponentStyle={{height: 10}}
         />
-        {actionType === 'Y' && <Button title={'서명 완료'} />}
-        {actionType === 'N' && (
-          <View>
-            <Button
-              title={'승인'}
-              onPress={() => handleApproveOrReject(true)}
-            />
-            <Button
-              title={'반려'}
-              onPress={() => handleApproveOrReject(false)}
-            />
+        {actionType === 'Y' && (
+          <View style={styles.xyButtonStyle}>
+            <ChoiceButton title={'서명 완료'} color={GRAY} onPress={() => {}} />
           </View>
         )}
-        {actionType === 'X' && <Button title={'반려 처리'} />}
+        {actionType === 'N' && (
+          <View style={styles.buttonContainer}>
+            <View style={styles.nButtonStyle}>
+              <View>
+                <TouchableOpacity onPress={showAcceptModal}>
+                  <ChoiceButton
+                    title={'승인'}
+                    // onPress={() => handleApproveOrReject(true)}
+                    color={CHOICEBUTTON.ALLOW}
+                  />
+                </TouchableOpacity>
+                <ModalOpen
+                  isVisible={isAcceptModalVisible}
+                  onClose={hideAcceptModal}
+                  item={'승인하시겠습니까?'}
+                />
+              </View>
+            </View>
+            <View style={styles.nButtonStyle}>
+              <View>
+                <TouchableOpacity onPress={showRejectModal}>
+                  <ChoiceButton
+                    title={'반려'}
+                    // onPress={() => handleApproveOrReject(false)}
+                    color={CHOICEBUTTON.REJECT}
+                  />
+                </TouchableOpacity>
+                <ModalOpen
+                  isVisible={isRejectModalVisible}
+                  onClose={hideRejectModal}
+                  item={'반려하시겠습니까?'}
+                />
+              </View>
+            </View>
+          </View>
+        )}
+        {actionType === 'X' && (
+          <View style={styles.xyButtonStyle}>
+            <ChoiceButton title={'서명 완료'} color={RED} onPress={() => {}} />
+          </View>
+        )}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: BLACK,
+  },
+  date: {
+    color: BLACK,
+    fontSize: 13,
+    marginVertical: 3,
+  },
+  toptxtContainer: {
+    marginHorizontal: 6,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: WHITE,
+    paddingVertical: 5,
+  },
+  topContainer: {
+    backgroundColor: WHITE,
+    flexDirection: 'column',
+    marginHorizontal: 10,
+    marginVertical: 8,
+    paddingVertical: 9,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    borderColor: WHITE,
+    borderWidth: 1,
+    elevation: 10,
+  },
+  mainContainer: {
+    flex: 1,
+    backgroundColor: WHITE,
+    flexDirection: 'column',
+    marginHorizontal: 10,
+    marginVertical: 10,
+    // paddingVertical: 1,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    borderColor: WHITE,
+    borderWidth: 1,
+    elevation: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: 15,
+  },
+  stick: {
+    flexDirection: 'row',
+    width: 3,
+    height: 15,
+    backgroundColor: '#684DF5',
+    marginRight: 5,
+    marginLeft: 3,
+    marginTop: 13,
+    marginBottom: 7,
+  },
+  nButtonStyle: {
+    width: '40%',
+  },
   v: {
     marginTop: 10,
     fontWeight: 'bold',
   },
-  doc: {},
+  pdfpress: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  pdfbutton: {
+    color: PRIMARY.DEFAULT,
+  },
+  xyButtonStyle: {
+    marginVertical: 15,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    height: '25%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  iconContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  closeButton: {
+    marginTop: '3%',
+    marginRight: '3%',
+  },
+  modalButtonContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  modalButtonStyle: {
+    marginTop: '8%',
+    marginBottom: '5%',
+    width: '40%',
+  },
 });
 
 export default ListDetailScreen;
