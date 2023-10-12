@@ -51,22 +51,46 @@ const MainStack = () => {
     <Stack.Navigator
       initialRouteName="BottomHome"
       screenOptions={{
+        headerStyle: {
+          height: 75,
+          // backgroundColor: GRAY,
+        },
+        headerTitle: () => (
+          <Image
+            source={require('../img/logo.png')}
+            style={{
+              width: 150,
+              height: 150,
+              resizeMode: 'contain',
+              // justifyContent: 'center',
+              // alignItems: 'center',
+              // flex: 1,
+            }}
+          />
+        ),
+        headerTitleAlign: 'center',
         headerRight: () => (
-          <View style={{marginRight: 12}}>
+          <View
+            style={{
+              marginRight: 10,
+              // marginTop: 41,
+              flex: 1,
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+              flexDirection: 'row',
+            }}>
             <Text
               style={{
-                textAlign: 'right',
-                fontSize: 12,
+                fontSize: 11,
                 fontWeight: 'bold',
                 color: BLACK,
+                marginRight: 5,
               }}>
               {department}
             </Text>
             <Text
               style={{
-                textAlign: 'right',
-                fontSize: 12,
-                fontWeight: 'bold',
+                fontSize: 11,
                 color: BLACK,
               }}>
               {user}
@@ -79,37 +103,25 @@ const MainStack = () => {
         component={BottomStack}
         options={{
           headerLeft: null, // 뒤로 가기 버튼 숨김
-          headerTitle: () => (
-            <Image
-              source={require('../img/logo.png')}
-              style={{
-                width: 150,
-                height: 150,
-                resizeMode: 'contain',
-                marginTop: 5,
-              }}
-            />
-          ),
-          headerTitleAlign: 'center',
         }}
       />
       <Stack.Screen
         name="ListDetail"
         component={ListDetailScreen}
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require('../img/logo.png')}
-              style={{
-                width: 150,
-                height: 150,
-                resizeMode: 'contain',
-                marginTop: 5,
-              }}
-            />
-          ),
-          headerTitleAlign: 'center',
-        }}
+        // options={{
+        //   headerTitle: () => (
+        //     <Image
+        //       source={require('../img/logo.png')}
+        //       style={{
+        //         width: 150,
+        //         height: 150,
+        //         resizeMode: 'contain',
+        //         marginTop: 5,
+        //       }}
+        //     />
+        //   ),
+        //   headerTitleAlign: 'center',
+        // }}
       />
     </Stack.Navigator>
   );

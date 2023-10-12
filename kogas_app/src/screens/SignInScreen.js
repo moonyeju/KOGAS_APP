@@ -13,6 +13,7 @@ import Button from '../components/Button';
 import TextInput, {IconNames, ReturnKeyTypes} from '../components/TextInput';
 import PropTypes from 'prop-types';
 import {url} from '../url';
+import {RED} from '../color';
 
 const SignInScreen = ({navigation}) => {
   const [id, setId] = useState('');
@@ -20,6 +21,7 @@ const SignInScreen = ({navigation}) => {
   const passwordRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // 실패 메시지 상태 추가
 
   useEffect(() => {
     setDisabled(!id || !password);
@@ -29,17 +31,23 @@ const SignInScreen = ({navigation}) => {
     Keyboard.dismiss();
   };
 
+  // const handleFailure = error => {
+  //   Alert.alert('알림', error, [
+  //     {
+  //       text: '확인',
+  //       onPress: () => {
+  //         setIsLoading(false);
+  //         setId('');
+  //         setPassword('');
+  //       },
+  //     },
+  //   ]);
+  // };
   const handleFailure = error => {
-    Alert.alert('알림', error, [
-      {
-        text: '확인',
-        onPress: () => {
-          setIsLoading(false);
-          setId('');
-          setPassword('');
-        },
-      },
-    ]);
+    setIsLoading(false);
+    setId('');
+    setPassword('');
+    setErrorMessage(error); // 실패 메시지 설정
   };
 
   const onSubmit = async () => {
@@ -61,7 +69,7 @@ const SignInScreen = ({navigation}) => {
 
         if (loginResponse.ok) {
           console.log('ssdata' + loginData.status);
-          Alert.alert(loginData.message);
+          // Alert.alert(loginData.message);
           navigation.navigate('Main');
         } else {
           handleFailure(loginData.message);
@@ -99,6 +107,10 @@ const SignInScreen = ({navigation}) => {
             iconName={IconNames.PASSWORD}
             onSubmitEditing={onSubmit}
           />
+          {errorMessage !== '' && (
+            <Text style={styles.errorText}>{errorMessage}</Text>
+          )}
+
           <View style={styles.buttonContainer}>
             <Button
               title={'로그인'}
@@ -153,6 +165,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     justifyContent: 'flex-start',
     fontWeight: '900',
+  },
+  errorText: {
+    color: RED,
+    textAlign: 'center',
+    marginTop: 10,
   },
 });
 

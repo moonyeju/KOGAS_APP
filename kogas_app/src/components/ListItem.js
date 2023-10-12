@@ -1,7 +1,7 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {memo} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {BLACK, WHITE, STICK, SHADOW} from '../color';
+import {BLACK, WHITE, STICK, SHADOW, PRIMARY} from '../color';
 import {useEffect, useState} from 'react';
 
 const ListItem = memo(({name, item}) => {
@@ -57,16 +57,20 @@ const ListItem = memo(({name, item}) => {
               color: BLACK,
               fontWeight: 'bold',
               marginBottom: 5,
-              fontSize: 13,
+              fontSize: 12,
             }}>
             {item.document_name}
           </Text>
-          <Text style={{fontSize: 13}}>
+          <Text style={{fontSize: 12}}>
             기안자: {item.main_department} {item.name}
           </Text>
         </View>
         <View style={styles.textContainer}>
-          <Text style={{fontSize: 9}}>기안일자: {item.reg_date}</Text>
+          <Text style={{fontSize: 8}}>기안일자: {item.reg_date}</Text>
+          <Text
+            style={{fontSize: 11, fontWeight: 'bold', color: PRIMARY.DEFAULT}}>
+            자세히 보기
+          </Text>
         </View>
       </View>
     </Pressable>
@@ -80,18 +84,20 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     flexDirection: 'column',
     marginHorizontal: '4%',
-    marginVertical: '2%',
+    // marginVertical: '2%',
+    marginBottom: 20,
     paddingVertical: '2%',
-    paddingHorizontal: '5%',
+    paddingHorizontal: '4%',
     borderRadius: 20,
     borderColor: WHITE,
     // borderWidth: 1,
-    elevation: 6,
+    elevation: 10,
   },
   textContainer: {
-    marginVertical: 5,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    marginVertical: 3,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

@@ -75,8 +75,10 @@ const HomeScreen = () => {
         <View style={styles.mydocs}>
           <CircularProgressBar percentage={myperc} />
           <View style={styles.text}>
-            <Text style={{fontWeight: 600}}>내 문서 진행률</Text>
-            <Text style={{fontSize: 12, marginTop: 5}}>
+            <Text style={{fontWeight: 'bold', fontSize: 13}}>
+              내 문서 진행률
+            </Text>
+            <Text style={{fontSize: 11, marginTop: 3}}>
               서명 대상자 {signatureAll}명 중 {signatureClear}명이 서명을
               완료하였습니다.
             </Text>
@@ -85,8 +87,10 @@ const HomeScreen = () => {
         <View style={styles.mydocs}>
           <CircularProgressBar percentage={recentperc} />
           <View style={styles.text}>
-            <Text style={{fontWeight: 600}}>최근 문서 진행률</Text>
-            <Text style={{fontSize: 12, marginTop: 5}}>
+            <Text style={{fontWeight: 'bold', fontSize: 13}}>
+              최근 문서 진행률
+            </Text>
+            <Text style={{fontSize: 11, marginTop: 3}}>
               서명 대상자 {recentAll}명 중 {recentClear}명이 서명을
               완료하였습니다.
             </Text>
@@ -95,7 +99,7 @@ const HomeScreen = () => {
       </View>
       <View style={styles.containerBottom}>
         <Text style={styles.title}>서명 이력</Text>
-        <View>
+        <View style={styles.list}>
           <FlatList
             data={list}
             renderItem={({item}) => <ListItem name="HomeScreen" item={item} />}
@@ -114,21 +118,28 @@ const styles = StyleSheet.create({
   },
   containerBottom: {
     flex: 1,
+    marginTop: 8,
+  },
+  list: {
+    paddingTop: 15,
+    // backgroundColor: BLACK,
+    flex: 1,
   },
   mydocs: {
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: '#F3F4F6',
+    borderColor: '#ebebeb',
     borderRadius: 10,
-    margin: 8,
+    marginHorizontal: 8,
+    marginTop: 13,
     padding: 10,
   },
   title: {
     color: BLACK,
     //marginTop: 5,
     fontWeight: 'bold',
-    borderBottomWidth: 0.5,
-    borderBottomColor: GRAY,
+    borderBottomWidth: 1.5,
+    borderBottomColor: '#dbdbdb',
     paddingVertical: 5,
     marginHorizontal: 10,
   },

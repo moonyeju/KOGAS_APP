@@ -6,8 +6,8 @@ const Button = ({title, onPress, color}) => {
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.container, {backgroundColor: color}]}>
-      <Text style={styles.title}>{title}</Text>
+      style={[styles.choicecontainer, {backgroundColor: color}]}>
+      <Text style={styles.choicetitle}>{title}</Text>
     </Pressable>
   );
 };
@@ -20,13 +20,13 @@ Button.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  choicecontainer: {
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 10,
   },
-  title: {
+  choicetitle: {
     color: WHITE,
     fontSize: 16,
     fontWeight: 'bold',

@@ -20,6 +20,9 @@ const RadioButton = ({options, selectedOption, onSelect}) => {
               backgroundColor:
                 selectedOption === option ? PRIMARY.DEFAULT : RADIO.DEFAULT,
               borderRadius: 20,
+              paddingVertical: 2,
+
+              // flexDirection: 'row',
             }}>
             {/* 선택된 옵션에 따라 스타일 변경 */}
             <Text
@@ -215,6 +218,8 @@ const styles = StyleSheet.create({
   radiocontainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: 15,
+    // flexDirection: 'row',
   },
   radioButton: {
     justifyContent: 'space-evenly',
@@ -222,7 +227,12 @@ const styles = StyleSheet.create({
     backgroundColor: RADIO.DEFAULT,
     borderRadius: 20,
     elevation: 5,
-    marginTop: 20,
+    // paddingVertical: 10,
+  },
+  separator: {
+    width: 2, // 중간 선의 너비 조정
+    backgroundColor: BLACK, // 중간 선의 색상 설정
+    alignSelf: 'center', // 중간 정렬
   },
 });
 

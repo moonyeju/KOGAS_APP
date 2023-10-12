@@ -8,12 +8,10 @@ import {
   Pressable,
   Button,
 } from 'react-native';
-import {BLACK, CHOICEBUTTON, GRAY, PRIMARY, STICK, WHITE} from '../color';
+import {BLACK, CHOICEBUTTON, GRAY, PRIMARY, STICK, WHITE, RED} from '../color';
 import DetailListItem from '../components/DetailListItem';
 import {useEffect, useState} from 'react';
 import {pdfurl, url} from '../url';
-import ChoiceButton from '../components/ChoiceButton';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 
@@ -174,8 +172,7 @@ const ListDetailScreen = ({route, navigation, item}) => {
           </Text>
           <View style={styles.modalButtonContainer}>
             <View style={styles.modalButtonStyle}>
-              <ChoiceButton
-                title={'예'}
+              <Pressable
                 onPress={() => {
                   if (isAcceptModalVisible) {
                     console.log('승인 처리');
@@ -186,38 +183,28 @@ const ListDetailScreen = ({route, navigation, item}) => {
                     reject();
                   }
                 }}
-                color={CHOICEBUTTON.ALLOW}
-              />
+                style={[
+                  styles.choicecontainer,
+                  {backgroundColor: CHOICEBUTTON.ALLOW},
+                ]}>
+                <Text style={styles.choicetitle}>예</Text>
+              </Pressable>
             </View>
             <View style={styles.modalButtonStyle}>
-              <ChoiceButton
-                title={'아니오'}
+              <Pressable
                 onPress={onClose}
-                color={CHOICEBUTTON.REJECT}
-              />
+                style={[
+                  styles.choicecontainer,
+                  {backgroundColor: CHOICEBUTTON.REJECT},
+                ]}>
+                <Text style={styles.choicetitle}>아니요</Text>
+              </Pressable>
             </View>
           </View>
         </View>
       </Modal>
     );
   };
-
-  // const handleApproveOrReject = isApprove => {
-  //   const message = isApprove ? '승인하시겠습니까?' : '반려하시겠습니까?';
-  //   if (isApprove) {
-  //     <Modal
-  //       isVisible={isAcceptModalVisible}
-  //       onClose={hideAcceptModal}
-  //       item={'승인하시겠습니까?'}
-  //     />;
-  //   } else {
-  //     <Modal
-  //       isVisible={isAcceptModalVisible}
-  //       onClose={hideAcceptModal}
-  //       item={message}
-  //     />;
-  //   }
-  // };
 
   // PDF 파일을 열도록 유도하는 함수
   const openPDFInBrowser = () => {
@@ -278,24 +265,28 @@ const ListDetailScreen = ({route, navigation, item}) => {
           )}
           windowSize={5}
           ListHeaderComponent={View}
-          ListHeaderComponentStyle={{height: 10}}
         />
         {actionType === 'Y' && (
           <View style={styles.xyButtonStyle}>
-            <ChoiceButton title={'서명 완료'} color={GRAY} onPress={() => {}} />
+            <Pressable
+              onPress={() => {}}
+              style={[styles.choicecontainer, {backgroundColor: GRAY}]}>
+              <Text style={styles.choicetitle}>서명 완료</Text>
+            </Pressable>
           </View>
         )}
         {actionType === 'N' && (
           <View style={styles.buttonContainer}>
             <View style={styles.nButtonStyle}>
               <View>
-                <TouchableOpacity onPress={showAcceptModal}>
-                  <ChoiceButton
-                    title={'승인'}
-                    // onPress={() => handleApproveOrReject(true)}
-                    color={CHOICEBUTTON.ALLOW}
-                  />
-                </TouchableOpacity>
+                <Pressable
+                  onPress={showAcceptModal}
+                  style={[
+                    styles.choicecontainer,
+                    {backgroundColor: CHOICEBUTTON.ALLOW},
+                  ]}>
+                  <Text style={styles.choicetitle}>승인</Text>
+                </Pressable>
                 <ModalOpen
                   isVisible={isAcceptModalVisible}
                   onClose={hideAcceptModal}
@@ -305,13 +296,14 @@ const ListDetailScreen = ({route, navigation, item}) => {
             </View>
             <View style={styles.nButtonStyle}>
               <View>
-                <TouchableOpacity onPress={showRejectModal}>
-                  <ChoiceButton
-                    title={'반려'}
-                    // onPress={() => handleApproveOrReject(false)}
-                    color={CHOICEBUTTON.REJECT}
-                  />
-                </TouchableOpacity>
+                <Pressable
+                  onPress={showRejectModal}
+                  style={[
+                    styles.choicecontainer,
+                    {backgroundColor: CHOICEBUTTON.REJECT},
+                  ]}>
+                  <Text style={styles.choicetitle}>반려</Text>
+                </Pressable>
                 <ModalOpen
                   isVisible={isRejectModalVisible}
                   onClose={hideRejectModal}
@@ -323,7 +315,14 @@ const ListDetailScreen = ({route, navigation, item}) => {
         )}
         {actionType === 'X' && (
           <View style={styles.xyButtonStyle}>
-            <ChoiceButton title={'서명 완료'} color={RED} onPress={() => {}} />
+            <Pressable
+              onPress={() => {}}
+              style={[
+                styles.choicecontainer,
+                {backgroundColor: CHOICEBUTTON.REJECT},
+              ]}>
+              <Text style={styles.choicetitle}>반려</Text>
+            </Pressable>
           </View>
         )}
       </View>
@@ -368,7 +367,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginHorizontal: 10,
     marginVertical: 10,
-    // paddingVertical: 1,
     paddingHorizontal: 10,
     borderRadius: 20,
     borderColor: WHITE,
@@ -403,6 +401,7 @@ const styles = StyleSheet.create({
   },
   pdfbutton: {
     color: PRIMARY.DEFAULT,
+    // fontWeight: 'bold',
   },
   xyButtonStyle: {
     marginVertical: 15,
@@ -412,7 +411,7 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: WHITE,
     height: '25%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -437,6 +436,18 @@ const styles = StyleSheet.create({
     marginTop: '8%',
     marginBottom: '5%',
     width: '40%',
+  },
+  choicecontainer: {
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  choicetitle: {
+    color: WHITE,
+    fontSize: 16,
+    fontWeight: 'bold',
+    lineHeight: 20,
   },
 });
 

@@ -30,7 +30,7 @@ const DetailListItem = memo(({name, item}) => {
         </View>
 
         <View style={styles.right}>
-          <Text style={{color: statusColor, fontSize: 12, marginBottom: 10}}>
+          <Text style={{color: {statusColor}, fontSize: 14, marginBottom: 10}}>
             {statusMessage}
           </Text>
           <Text style={{fontSize: 12, marginBottom: 4}}>{item.datetime}</Text>
@@ -49,12 +49,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderBottomWidth: 0.5,
     paddingVertical: 5,
-    paddingHorizontal: 15,
   },
   left: {
     flexDirection: 'row',
-    paddingRight: 10,
-    // backgroundColor: GRAY,/
   },
   right: {
     flex: 1,
